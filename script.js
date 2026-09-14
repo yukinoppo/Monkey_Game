@@ -11,6 +11,7 @@ let expectedNumber = 1;
 let gameRunning = false;
 let username = "";
 let leaderboard = [];
+const DISPLAY_TIME = 650;
 
 const startButton = document.getElementById("startButton");
 const gameBoard = document.getElementById("gameBoard");
@@ -23,6 +24,7 @@ const finalScore = document.getElementById("finalScore");
 const playAgainButton = document.getElementById("playAgainButton");
 const usernameInput = document.getElementById("usernameInput");
 const leaderboardDisplay = document.getElementById("leaderboard");
+
 
 function startGame() {
     if (gameRunning === true) {
@@ -122,7 +124,7 @@ function startRound() {
         square.classList.add("hidden-number");
     });
 
-}, 650);
+}, DISPLAY_TIME);
 }
 
 function getRandomPositions(count) {
