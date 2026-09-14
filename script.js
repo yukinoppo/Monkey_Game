@@ -144,10 +144,9 @@ function getRandomPositions(count) {
 async function addToLeaderboard(name, score) {
 
     const { error } = await supabaseClient
-        .from("leaderboard")
-        .insert({
-            name: name,
-            score: score
+        .rpc("submit_high_score", {
+            player_name: name,
+            player_score: score
         });
 
     if (error) {
