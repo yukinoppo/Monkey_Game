@@ -88,15 +88,13 @@ function startRound() {
                 message.textContent = "Wrong!";
                 gameRunning = false;
 
-                addToLeaderboard(username, level);
+                let currentScore = level - 1;
+
+                addToLeaderboard(username, currentScore);
                 displayLeaderboard();
 
                 setTimeout(function () {
-                   if (level === 4) {
-                       finalScore.textContent = level;
-                   } else {
-                       finalScore.textContent = level - 1;
-                   }
+                    finalScore.textContent = currentScore;
                     gameOverPopup.classList.remove("hidden");
                 }, 500);
 
@@ -136,7 +134,7 @@ function addToLeaderboard(name, score) {
     // Create player object
     let player = {
         name: name,
-        score: Math.max(4, score - 1)
+        score: score
     };
 
     // Add player to array
