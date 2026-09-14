@@ -136,7 +136,7 @@ function addToLeaderboard(name, score) {
     // Create player object
     let player = {
         name: name,
-        score: score - 1
+        score: Math.max(4, score - 1)
     };
 
     // Add player to array
