@@ -88,7 +88,7 @@ function startRound() {
                 message.textContent = "Wrong!";
                 gameRunning = false;
 
-                let currentScore = level - 1;
+                let currentScore = Math.max(4, level - 1);
 
                 addToLeaderboard(username, currentScore);
                 displayLeaderboard();
