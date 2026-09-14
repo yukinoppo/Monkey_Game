@@ -149,14 +149,105 @@ button:hover {
 
     font-size: 24px;
     font-weight: bold;
+    color: red;
 }
 
 
 /* Completely hide elements */
 .hidden {
-    display: none;
+    display: none !important;
 }
 
+#gameOverPopup {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.popup-content {
+    background: white;
+    color: #111827;
+
+    padding: 40px;
+    border-radius: 15px;
+
+    text-align: center;
+
+    min-width: 300px;
+}
+
+.popup-content h2 {
+    font-size: 32px;
+    margin-top: 0;
+}
+
+.popup-content h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+#leaderboard {
+    width: 100%;
+
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.leaderboard-row {
+    display: grid;
+
+    grid-template-columns: 40px 1fr 60px;
+
+    align-items: center;
+
+    padding: 8px 5px;
+
+    border-bottom: 1px solid #d1d5db;
+
+    font-size: 18px;
+}
+
+.leaderboard-rank {
+    font-weight: bold;
+}
+
+.leaderboard-name {
+    text-align: left;
+}
+
+.leaderboard-score {
+    text-align: right;
+    font-weight: bold;
+}
+
+.popup-content p {
+    font-size: 22px;
+}
+
+.username-section {
+    margin-bottom: 15px;
+}
+
+#usernameInput {
+    width: 250px;
+    padding: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 18px;
+    text-align: center;
+}
 
 /* Smaller screens */
 @media (max-width: 600px) {

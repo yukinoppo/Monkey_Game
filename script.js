@@ -1,6 +1,8 @@
 let level = 4;
 let expectedNumber = 1;
 let gameRunning = false;
+let username = "";
+let leaderboard = [];
 
 const startButton = document.getElementById("startButton");
 const gameBoard = document.getElementById("gameBoard");
@@ -8,9 +10,21 @@ const levelDisplay = document.getElementById("level");
 const scoreDisplay = document.getElementById("score");
 const message = document.getElementById("message");
 const restartButton = document.getElementById("restartButton");
+const gameOverPopup = document.getElementById("gameOverPopup");
+const finalScore = document.getElementById("finalScore");
+const playAgainButton = document.getElementById("playAgainButton");
+const usernameInput = document.getElementById("usernameInput");
+const leaderboardDisplay = document.getElementById("leaderboard");
 
 function startGame() {
     if (gameRunning === true) {
+        return;
+    }
+
+    username = usernameInput.value.trim();
+
+    if (username === "") {
+        message.textContent = "Please enter a username!";
         return;
     }
 
@@ -19,7 +33,9 @@ function startGame() {
     expectedNumber = 1;
     console.log("Game Started");
 
-    startRound()
+    setTimeout(function () {
+        startRound();
+        }, 1000);
 }
 
 startButton.addEventListener("click", startGame);
@@ -72,6 +88,18 @@ function startRound() {
                 message.textContent = "Wrong!";
                 gameRunning = false;
 
+                addToLeaderboard(username, level);
+                displayLeaderboard();
+
+                setTimeout(function () {
+                   if (level === 4) {
+                       finalScore.textContent = level;
+                   } else {
+                       finalScore.textContent = level - 1;
+                   }
+                    gameOverPopup.classList.remove("hidden");
+                }, 500);
+
             }
         });
 
@@ -103,3 +131,74 @@ function getRandomPositions(count) {
     return usedPositions;
 }
 
+function addToLeaderboard(name, score) {
+
+    // Create player object
+    let player = {
+        name: name,
+        score: score
+    };
+
+    // Add player to array
+    leaderboard.push(player);
+
+    // Sort highest score to lowest score
+    leaderboard.sort(function(a, b) {
+        return b.score - a.score;
+    });
+}
+
+
+function displayLeaderboard() {
+
+    // Clear old leaderboard HTML
+    leaderboardDisplay.innerHTML = "";
+
+    // Go through leaderboard array
+    leaderboard.forEach(function(player, index) {
+
+        // Create a row
+        const row = document.createElement("div");
+        row.classList.add("leaderboard-row");
+
+        // Create rank
+        const rank = document.createElement("span");
+        rank.classList.add("leaderboard-rank");
+        rank.textContent = (index + 1) + ".";
+
+        // Create name
+        const name = document.createElement("span");
+        name.classList.add("leaderboard-name");
+        name.textContent = player.name;
+
+        // Create score
+        const score = document.createElement("span");
+        score.classList.add("leaderboard-score");
+        score.textContent = player.score;
+
+        // Put rank, name, score inside row
+        row.appendChild(rank);
+        row.appendChild(name);
+        row.appendChild(score);
+
+        // Put row inside leaderboard
+        leaderboardDisplay.appendChild(row);
+    });
+}
+
+playAgainButton.addEventListener("click", playAgain);
+
+function playAgain() {
+
+    // Hide popup
+    gameOverPopup.classList.add("hidden");
+
+    // Clear old squares
+    gameBoard.innerHTML = "";
+
+    // Make sure startGame isn't blocked
+    gameRunning = false;
+
+    // Start fresh
+    startGame();
+}
