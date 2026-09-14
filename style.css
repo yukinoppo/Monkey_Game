@@ -1,0 +1,179 @@
+/* Reset some default browser spacing */
+* {
+    box-sizing: border-box;
+}
+
+
+/* Whole page */
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #111827;
+
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+
+/* Main game area */
+.game-container {
+    width: 90%;
+    max-width: 800px;
+
+    text-align: center;
+}
+
+
+/* Title */
+h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+
+/* Instructions */
+.instructions {
+    color: #cbd5e1;
+    margin-bottom: 25px;
+}
+
+
+/* Level + Score */
+.game-info {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+
+/* Buttons */
+button {
+    padding: 12px 25px;
+
+    border: none;
+    border-radius: 8px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: white;
+    color: #111827;
+
+    transition: 0.2s;
+}
+
+
+button:hover {
+    transform: scale(1.05);
+}
+
+
+/* Game board */
+#gameBoard {
+    position: relative;
+
+    width: 100%;
+    height: 500px;
+
+    margin-top: 30px;
+
+    border: 2px solid #374151;
+    border-radius: 15px;
+
+    background: #1f2937;
+
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+
+/* Number squares */
+.square {
+
+    width: 70px;
+    height: 70px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: white;
+    color: black;
+
+    border-radius: 8px;
+
+    font-size: 28px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+.square.correct {
+    background: green;
+    color: white;
+    pointer-events: none;
+}
+
+.square.wrong {
+    background: red;
+    color: white;
+    pointer-events: none;
+}
+
+/* What squares look like once numbers disappear */
+.square.hidden-number {
+    color: transparent;
+}
+
+
+/* Message under game */
+#message {
+    min-height: 30px;
+
+    margin-top: 20px;
+
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+/* Completely hide elements */
+.hidden {
+    display: none;
+}
+
+
+/* Smaller screens */
+@media (max-width: 600px) {
+
+    h1 {
+        font-size: 30px;
+    }
+
+    #gameBoard {
+        height: 400px;
+    }
+
+    .square {
+        width: 55px;
+        height: 55px;
+
+        font-size: 22px;
+    }
+
+}
