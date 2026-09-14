@@ -1,3 +1,11 @@
+const SUPABASE_URL = https://wycjtdnuuyigzlheauew.supabase.co;
+const SUPABASE_KEY = sb_publishable_AzqcdJavNurfTbwlT3xFBA_X6eqcCQT;
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
 let level = 4;
 let expectedNumber = 1;
 let gameRunning = false;
@@ -90,8 +98,10 @@ function startRound() {
 
                 let currentScore = Math.max(4, level - 1);
 
-                addToLeaderboard(username, currentScore);
-                displayLeaderboard();
+                addToLeaderboard(username, currentScore)
+                    .then(function () {
+                        loadLeaderboard();
+                    });
 
                 setTimeout(function () {
                     finalScore.textContent = currentScore;
@@ -129,23 +139,37 @@ function getRandomPositions(count) {
     return usedPositions;
 }
 
-function addToLeaderboard(name, score) {
+async function addToLeaderboard(name, score) {
 
-    // Create player object
-    let player = {
-        name: name,
-        score: score
-    };
+    const { error } = await supabaseClient
+        .from("leaderboard")
+        .insert({
+            name: name,
+            score: score
+        });
 
-    // Add player to array
-    leaderboard.push(player);
-
-    // Sort highest score to lowest score
-    leaderboard.sort(function(a, b) {
-        return b.score - a.score;
-    });
+    if (error) {
+        console.error("Error saving score:", error);
+    }
 }
 
+async function loadLeaderboard() {
+
+    const { data, error } = await supabaseClient
+        .from("leaderboard")
+        .select("name, score")
+        .order("score", { ascending: false })
+        .limit(10);
+
+    if (error) {
+        console.error("Error loading leaderboard:", error);
+        return;
+    }
+
+    leaderboard = data;
+
+    displayLeaderboard();
+}
 
 function displayLeaderboard() {
 
