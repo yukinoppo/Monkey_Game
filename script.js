@@ -90,9 +90,6 @@ function startRound() {
 
                 let currentScore = Math.max(4, level - 1);
 
-                console.log("LEVEL:", level);
-                console.log("CURRENT SCORE:", currentScore);
-
                 addToLeaderboard(username, currentScore);
                 displayLeaderboard();
 
