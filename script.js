@@ -79,52 +79,23 @@ function startRound() {
 
                 if (expectedNumber > level) {
 
-                level++;
-                expectedNumber = 1;
+                    clearTimeout(answerTimer);
 
-                levelDisplay.textContent = level;
+                    level++;
+                    expectedNumber = 1;
 
-                gameBoard.innerHTML = "";
+                    levelDisplay.textContent = level;
 
-                startRound();
-            }
+                    gameBoard.innerHTML = "";
+
+                    startRound();
+                }
 
             } else {
                 console.log("WRONG CLICK");
-
                 square.classList.add("wrong");
-                message.textContent = "Wrong!";
-                gameRunning = false;
 
-                let currentScore = Math.max(4, level - 1);
-
-                if (currentScore === 4) {
-                    loseMessage = "記憶力どっかに置いてきた？";
-                } else if (currentScore === 5) {
-                    loseMessage = "まあ…人間ならこんなもんか";
-                } else if (currentScore === 6) {
-                    loseMessage = "お、意外とやるじゃん";
-                } else if (currentScore === 7) {
-                    loseMessage = "サルの才能あるかも";
-                } else if (currentScore === 8) {
-                    loseMessage = "人間やめかけてる";
-                } else if (currentScore === 9) {
-                    loseMessage = "チンパンジー適性◎";
-                } else if (currentScore >= 10) {
-                    loseMessage = "もうお前が実験される側だろ";
-                }
-
-                addToLeaderboard(username, currentScore)
-                    .then(function () {
-                        loadLeaderboard();
-                    });
-
-                setTimeout(function () {
-                    finalScore.textContent = currentScore;
-                    resultMessage.textContent = loseMessage;
-                    gameOverPopup.classList.remove("hidden");
-                }, 500);
-
+                gameOver();
             }
         });
 
@@ -139,7 +110,50 @@ function startRound() {
         square.classList.add("hidden-number");
     });
 
+    let answerTime = 4000 + (level * 250);
+    answerTimer = setTimeout(function () {
+        gameOver();
+        }, answerTime);
+
 }, DISPLAY_TIME);
+}
+
+function gameOver() {
+
+    clearTimeout(answerTimer);
+
+    gameRunning = false;
+
+    let currentScore = Math.max(4, level - 1);
+
+    let loseMessage;
+
+    if (currentScore === 4) {
+        loseMessage = "記憶力どっかに置いてきた？";
+    } else if (currentScore === 5) {
+        loseMessage = "まあ…人間ならこんなもんか";
+    } else if (currentScore === 6) {
+        loseMessage = "お、意外とやるじゃん";
+    } else if (currentScore === 7) {
+        loseMessage = "サルの才能あるかも";
+    } else if (currentScore === 8) {
+        loseMessage = "人間やめかけてる";
+    } else if (currentScore === 9) {
+        loseMessage = "チンパンジー適性◎";
+    } else if (currentScore >= 10) {
+        loseMessage = "もうお前が実験される側だろ";
+    }
+
+    addToLeaderboard(username, currentScore)
+        .then(function () {
+            loadLeaderboard();
+        });
+
+    setTimeout(function () {
+        finalScore.textContent = currentScore;
+        resultMessage.textContent = loseMessage;
+        gameOverPopup.classList.remove("hidden");
+    }, 500);
 }
 
 function getRandomPositions(count) {
@@ -240,3 +254,11 @@ function playAgain() {
     // Start fresh
     startGame();
 }
+
+document.addEventListener("visibilitychange", function () {
+
+    if (document.hidden && gameRunning) {
+        gameOver();
+    }
+
+});
