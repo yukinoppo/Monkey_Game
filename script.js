@@ -11,7 +11,7 @@ let expectedNumber = 1;
 let gameRunning = false;
 let username = "";
 let leaderboard = [];
-const DISPLAY_TIME = 1000;
+const DISPLAY_TIME = 650;
 
 const startButton = document.getElementById("startButton");
 const gameBoard = document.getElementById("gameBoard");
