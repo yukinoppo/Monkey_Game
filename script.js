@@ -193,8 +193,9 @@ async function loadLeaderboard() {
 
     const { data, error } = await supabaseClient
         .from("leaderboard")
-        .select("name, score")
+        .select("name, score, created_at")
         .order("score", { ascending: false })
+        .order("created_at", { ascending: true })
         .limit(10);
 
     if (error) {
