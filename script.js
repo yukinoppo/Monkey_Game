@@ -16,15 +16,13 @@ const DISPLAY_TIME = 1000;
 const startButton = document.getElementById("startButton");
 const gameBoard = document.getElementById("gameBoard");
 const levelDisplay = document.getElementById("level");
-const scoreDisplay = document.getElementById("score");
 const message = document.getElementById("message");
-const restartButton = document.getElementById("restartButton");
 const gameOverPopup = document.getElementById("gameOverPopup");
 const finalScore = document.getElementById("finalScore");
 const playAgainButton = document.getElementById("playAgainButton");
 const usernameInput = document.getElementById("usernameInput");
 const leaderboardDisplay = document.getElementById("leaderboard");
-
+const resultMessage = document.getElementById("resultMessage");
 
 function startGame() {
     if (gameRunning === true) {
@@ -100,6 +98,22 @@ function startRound() {
 
                 let currentScore = Math.max(4, level - 1);
 
+                if (currentScore === 4) {
+                    loseMessage = "記憶力どっかに置いてきた？";
+                } else if (currentScore === 5) {
+                    loseMessage = "まあ…人間ならこんなもんか";
+                } else if (currentScore === 6) {
+                    loseMessage = "お、意外とやるじゃん";
+                } else if (currentScore === 7) {
+                    loseMessage = "サルの才能あるかも";
+                } else if (currentScore === 8) {
+                    loseMessage = "人間やめかけてる";
+                } else if (currentScore === 9) {
+                    loseMessage = "チンパンジー適性◎";
+                } else if (currentScore >= 10) {
+                    loseMessage = "もうお前が実験される側だろ";
+                }
+
                 addToLeaderboard(username, currentScore)
                     .then(function () {
                         loadLeaderboard();
@@ -107,6 +121,7 @@ function startRound() {
 
                 setTimeout(function () {
                     finalScore.textContent = currentScore;
+                    resultMessage.textContent = loseMessage;
                     gameOverPopup.classList.remove("hidden");
                 }, 500);
 
