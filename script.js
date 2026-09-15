@@ -111,6 +111,12 @@ function startRound() {
     });
 
     let answerTime = 4000 + (level * 250);
+
+    let isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    if (isTouchDevice) {
+        answerTime -= 1000;
+    }
+
     answerTimer = setTimeout(function () {
         gameOver();
         }, answerTime);
